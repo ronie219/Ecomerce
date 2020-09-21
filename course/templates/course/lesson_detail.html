@@ -1,0 +1,9 @@
+{% extends 'course/base.html' %}
+
+{% block content %}
+    {% if lesson is not None %}
+      {{lesson}}
+    {% else %}
+      <h3>Please Upgrade your Membership</h3>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'course/base.html' %}
+{% block content %}
+<div class="container">
+  <h2>Select the membeship</h2>
+  <div class="row">
+    {% for obj in object_list %}
+    <div class="col-sm-4 col-md-4">
+        <h3>{{obj}}</h3>
+        <p>${{obj.price}}<small>/month</small></p>
+        <h4>Inculded Cources</h4>
+        <ul>
+          {% for cource in obj.course_set.all %}
+          <li>{{cource.title}}</li>
+          {% endfor %}
+        </ul>
+        {% if obj.membership_type != 'Free'%}
+        <form action="{% url 'Membership:payment'%}" method="POST">
+          {% csrf_token %}
+          {% if obj.membership_type != curent_membership %}
+            <button class="btn btn-warning">Select</button>
+          {% else %}
+            <p>This is Your Current Membership</p>
+          {% endif %}
+          <input type="hidden" name="memberships_type" value="{{obj.membership_type}}">
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
